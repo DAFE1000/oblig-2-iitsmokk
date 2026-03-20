@@ -42,9 +42,15 @@ def df(x):
     y = np.exp(-x/4) * (1/(1 + x**2) - (1/4) * np.arctan(x))
     return y
 
+#legger inn den andrederiverte som g(x) siden jeg deriverte uten e
+def g(x):
+    y = (1/(1+x**2))+(8*x/((1+x**2)**2))
+    return y
+
 
 plt.plot(x1, f(x1), label="f(x)", color="green")
 plt.plot(x1, df(x1), label="f´(x)", color="red")
+plt.plot(x1, g(x1), label="g(x)", color="blue")
 #plotter i ett mer tydelig koordinatsystem
 plt.axhline(0)   # x-aksen
 plt.axvline(0)   # y-aksen
@@ -58,29 +64,36 @@ x0 = 1.6
 
 #Newtons metode
 def newton_metode(x):
-    y = x - (f(x)/df(x))
+    y = x - (df(x)/g(x))
     return y
 
-#xn+1
-xn = 0
+#xn
+xn = x0
 
-"""
-siden jeg skal finne punktet med 4 desimalers tilnærming så stopper jeg
-funksjonen når forskjellen mellom xn+1 - xn er mindre enn 4 desimalers tilnærming
 
-(xn+1-xn)<10^-4
+#xn + 1
+xn1 = newton_metode(xn)
 
-siden jeg velger å gjøre det slik så må jeg finne lengden av forskjellen
-mellom xn+1 og xn slik at programmet ikke stopper med en gang
-"""
-def lengde(x, y)
-    lengde = np.sqrt(x**2+y**2)
-    return lengde
-#finner nullpunktet, oppdaterer x0 til xn
+#finner nullpunktet
+for i in range (5):
+    xn = xn1
+    xn1 = newton_metode(xn)
+    print(f"nullpunktet er nå tilnærmet{xn1}")
 
-while ((xn-x0) < 10**-4):
-    xn = newton_metode(x0)
-    x0 = xn
-    print(f"nullpunktet er nå tilnærmet{xn}")
+print(f"f'(x)=0, når x = {round(xn1, 4)}")
 
-print(f"f'(x)=0, når x = {xn}")
+#lager en ny x-verdi med større domene
+x2 = np.linspace(-10, 10, 201)
+
+#plotter alt på ny, men med den nye x verdien for å sjekke om jeg har fått riktig toppunkt
+plt.plot(x2, f(x2), label="f(x)", color="green")
+plt.plot(x2, df(x2), label="f´(x)", color="red")
+plt.plot(x2, g(x2), label="g(x)", color="blue")
+plt.scatter(xn1, f(xn1), label="toppunkt")
+#plotter i ett mer tydelig koordinatsystem
+plt.axhline(0)   # x-aksen
+plt.axvline(0)   # y-aksen
+plt.grid()       # rutenett
+
+plt.legend()
+plt.show()
