@@ -70,9 +70,12 @@ funksjonen når forskjellen mellom xn+1 - xn er mindre enn 4 desimalers tilnærm
 
 (xn+1-xn)<10^-4
 
-siden jeg velger å gjøre det slik så blir 
+siden jeg velger å gjøre det slik så må jeg finne lengden av forskjellen
+mellom xn+1 og xn slik at programmet ikke stopper med en gang
 """
-
+def lengde(x, y)
+    lengde = np.sqrt(x**2+y**2)
+    return lengde
 #finner nullpunktet, oppdaterer x0 til xn
 
 while ((xn-x0) < 10**-4):
